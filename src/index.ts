@@ -4,9 +4,15 @@ import { Commit, currentCommit, pushTag } from "./git"
 import { readLastVersion, Action } from "./parser"
 
 const main = async () => {
-  const { key: version, date, actions } = readLastVersion()
-  const commit = await currentCommit()
-  await confirmation(version, date, actions, commit)
+  try {
+    const { key: version, date, actions } = readLastVersion()
+    const commit = await currentCommit()
+    const confirm = await confirmation(version, date, actions, commit)
+    if(confirm)
+      await pushTag(confirm.tag, confirm.message)
+  } catch(error) {
+    console.error(`Fatal error: ${error.message}`)
+  }
 }
 
 const confirmation = async (version: string, date: string, actions: Action[], commit: Commit) => {
@@ -30,7 +36,7 @@ const confirmation = async (version: string, date: string, actions: Action[], co
   const message = abstract.join("\n")
   const answer = await question(`${message}\n\nPush release? (y/n): `)
   if(answer.toLowerCase() === "y")
-    await pushTag(tag, message)
+    return { tag, message }
 }
 
 main()

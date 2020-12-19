@@ -14,6 +14,8 @@ export const currentCommit = async (): Promise<Commit> => {
 }
 
 export const pushTag = async (tag: string, message: string) => {
-  await exec(`git tag -a ${tag} -m "${message}"`)
-  await exec(`git push --tags`)
+  const { stderr: addError } = await exec(`git tag -a ${tag} -m "${message}"`)
+  if(addError) throw new Error(addError)
+  const { stderr: pushError } = await exec(`git push --tags`)
+  if(pushError) throw new Error(pushError)
 }
