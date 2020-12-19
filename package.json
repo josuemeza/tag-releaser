@@ -1,23 +1,25 @@
 {
   "name": "tag-releaser",
   "description": "CLI to tag releases through CHANGELOG.md.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Josue Meza",
     "email": "contacto@josuemeza.com"
   },
-  "maintainers": [{
-    "name": "Josue Meza",
-    "email": "contacto@josuemeza.com"
-  }],
-  "repository": { 
-     "url": "https://github.com/josuemeza/tag-releaser",
-     "type": "git"
+  "maintainers": [
+    {
+      "name": "Josue Meza",
+      "email": "contacto@josuemeza.com"
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/josuemeza/tag-releaser",
+    "type": "git"
   },
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf ./bin && tsc", 
+    "build": "rm -rf ./bin && tsc",
     "develop": "ts-node ./src",
     "start": "node ./bin"
   },
