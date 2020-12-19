@@ -41,18 +41,30 @@ var utils_1 = require("./utils");
 var git_1 = require("./git");
 var parser_1 = require("./parser");
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, version, date, actions, commit;
+    var _a, version, date, actions, commit, confirm, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
+                _b.trys.push([0, 5, , 6]);
                 _a = parser_1.readLastVersion(), version = _a.key, date = _a.date, actions = _a.actions;
                 return [4 /*yield*/, git_1.currentCommit()];
             case 1:
                 commit = _b.sent();
                 return [4 /*yield*/, confirmation(version, date, actions, commit)];
             case 2:
+                confirm = _b.sent();
+                if (!confirm) return [3 /*break*/, 4];
+                return [4 /*yield*/, git_1.pushTag(confirm.tag, "Release " + confirm.tag)];
+            case 3:
                 _b.sent();
-                return [2 /*return*/];
+                console.log("Pushed tag " + confirm.tag);
+                _b.label = 4;
+            case 4: return [3 /*break*/, 6];
+            case 5:
+                error_1 = _b.sent();
+                console.error("Fatal error: " + error_1.message);
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
@@ -84,12 +96,9 @@ var confirmation = function (version, date, actions, commit) { return __awaiter(
                 return [4 /*yield*/, utils_1.question(message + "\n\nPush release? (y/n): ")];
             case 1:
                 answer = _c.sent();
-                if (!(answer.toLowerCase() === "y")) return [3 /*break*/, 3];
-                return [4 /*yield*/, git_1.pushTag(tag, message)];
-            case 2:
-                _c.sent();
-                _c.label = 3;
-            case 3: return [2 /*return*/];
+                if (answer.toLowerCase() === "y")
+                    return [2 /*return*/, { tag: tag }];
+                return [2 /*return*/];
         }
     });
 }); };

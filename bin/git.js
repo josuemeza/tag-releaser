@@ -55,14 +55,19 @@ var currentCommit = function () { return __awaiter(void 0, void 0, void 0, funct
 }); };
 exports.currentCommit = currentCommit;
 var pushTag = function (tag, message) { return __awaiter(void 0, void 0, void 0, function () {
+    var addError, pushError;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, utils_1.exec("git tag -a " + tag + " -m \"" + message + "\"")];
             case 1:
-                _a.sent();
-                return [4 /*yield*/, utils_1.exec("git push --tags")];
+                addError = (_a.sent()).stderr;
+                if (addError)
+                    throw new Error(addError);
+                return [4 /*yield*/, utils_1.exec("git push origin " + tag)];
             case 2:
-                _a.sent();
+                pushError = (_a.sent()).stderr;
+                if (pushError)
+                    throw new Error(pushError);
                 return [2 /*return*/];
         }
     });

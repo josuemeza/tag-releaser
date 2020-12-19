@@ -8,8 +8,10 @@ const main = async () => {
     const { key: version, date, actions } = readLastVersion()
     const commit = await currentCommit()
     const confirm = await confirmation(version, date, actions, commit)
-    if(confirm)
-      await pushTag(confirm.tag, confirm.message)
+    if(confirm) {
+      await pushTag(confirm.tag, `Release ${confirm.tag}`)
+      console.log(`Pushed tag ${confirm.tag}`)
+    }
   } catch(error) {
     console.error(`Fatal error: ${error.message}`)
   }
@@ -36,7 +38,7 @@ const confirmation = async (version: string, date: string, actions: Action[], co
   const message = abstract.join("\n")
   const answer = await question(`${message}\n\nPush release? (y/n): `)
   if(answer.toLowerCase() === "y")
-    return { tag, message }
+    return { tag }
 }
 
 main()
