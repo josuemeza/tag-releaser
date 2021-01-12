@@ -8,10 +8,8 @@ const main = async () => {
     const { key: version, date, actions } = readLastVersion()
     const commit = await currentCommit()
     const confirm = await confirmation(version, date, actions, commit)
-    if(confirm) {
+    if(confirm)
       await pushTag(confirm.tag, `Release ${confirm.tag}`)
-      console.log(`Pushed tag ${confirm.tag}`)
-    }
   } catch(error) {
     console.error(`Fatal error: ${error.message}`)
   }
