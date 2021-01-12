@@ -1,7 +1,7 @@
 {
   "name": "tag-releaser",
   "description": "CLI to tag releases through CHANGELOG.md.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": {
     "name": "Josue Meza",
     "email": "contacto@josuemeza.com"
