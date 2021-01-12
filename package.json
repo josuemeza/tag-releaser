@@ -21,7 +21,8 @@
   "scripts": {
     "build": "rm -rf ./bin && tsc",
     "develop": "ts-node ./src",
-    "start": "node ./bin"
+    "start": "node ./bin",
+    "upload": "npm login && npm publish"
   },
   "engines": {
     "node": ">=10.0.0"
